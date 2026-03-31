@@ -1,5 +1,8 @@
 # X11 Layout Switch Release
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI](https://github.com/gugglegum/x11-layout-switch-release/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/gugglegum/x11-layout-switch-release/actions/workflows/ci.yml)
+
 Скрипты для Linux/X11, которые позволяют переключать раскладку клавиатуры не в момент нажатия `Alt+Shift` или `Ctrl+Shift`, а в момент отпускания клавиш.
 
 ## Что это такое
