@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=X11 Layout Switch Release
+Comment=Switch keyboard layout on Alt+Shift or Ctrl+Shift release
+Exec=@LISTENER_PATH@
+X-GNOME-Autostart-enabled=true
+Terminal=false
