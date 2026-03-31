@@ -10,6 +10,7 @@ Options:
   --user          Remove files from ~/.local/bin (default)
   --system        Remove files from /usr/local/bin
   --bin-dir PATH  Remove files from PATH
+  --purge-config  Also remove ~/.config/x11-layout-switch-release.conf
   -h, --help      Show this help
 
 Environment:
@@ -40,6 +41,7 @@ fi
 
 DEFAULT_USER_BIN="$TARGET_HOME/.local/bin"
 BIN_DIR=${INSTALL_BIN_DIR:-$DEFAULT_USER_BIN}
+PURGE_CONFIG=0
 
 while [ "$#" -gt 0 ]; do
     case "$1" in
@@ -57,6 +59,9 @@ while [ "$#" -gt 0 ]; do
             fi
             BIN_DIR="$1"
             ;;
+        --purge-config)
+            PURGE_CONFIG=1
+            ;;
         -h|--help)
             print_help
             exit 0
@@ -72,6 +77,7 @@ done
 
 LISTENER_DST="$BIN_DIR/x11-layout-switch-release.sh"
 AUTOSTART_FILE="$TARGET_HOME/.config/autostart/x11-layout-switch-release.desktop"
+CONFIG_FILE="$TARGET_HOME/.config/x11-layout-switch-release.conf"
 
 case "$BIN_DIR" in
     "$TARGET_HOME"|"$TARGET_HOME"/*)
@@ -84,8 +90,19 @@ esac
 
 rm -f "$AUTOSTART_FILE"
 
+if [ "$PURGE_CONFIG" -eq 1 ]; then
+    rm -f "$CONFIG_FILE"
+fi
+
 cat <<EOF
 Removed:
   $LISTENER_DST
   $AUTOSTART_FILE
 EOF
+
+if [ "$PURGE_CONFIG" -eq 0 ]; then
+    cat <<EOF
+Preserved config:
+  $CONFIG_FILE
+EOF
+fi

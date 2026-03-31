@@ -2,6 +2,19 @@
 
 set -u
 
+: "${HOME:?HOME is not set}"
+
+readonly CONFIG_FILE="${KB_LAYOUT_SWITCH_CONFIG:-$HOME/.config/x11-layout-switch-release.conf}"
+
+load_config() {
+    if [[ -f "$CONFIG_FILE" ]]; then
+        # shellcheck disable=SC1090
+        source "$CONFIG_FILE"
+    fi
+}
+
+load_config
+
 readonly KEYBOARD_NAME="${KB_LAYOUT_SWITCH_KEYBOARD_NAME:-AT Translated Set 2 keyboard}"
 readonly FALLBACK_KEYBOARD_NAME="${KB_LAYOUT_SWITCH_FALLBACK_KEYBOARD_NAME:-Virtual core keyboard}"
 readonly XKB_SWITCH_CMD="${XKB_SWITCH_CMD:-xkb-switch}"
@@ -127,6 +140,7 @@ readonly LAYOUT_SWITCH_CMD="$(resolve_xkb_switch_cmd)"
 readonly KEYBOARD_ID="$(resolve_keyboard_id)"
 
 acquire_lock
+log_debug "Using config file $CONFIG_FILE"
 log_debug "Listening on keyboard id $KEYBOARD_ID"
 log_debug "Using xkb-switch command $LAYOUT_SWITCH_CMD"
 
